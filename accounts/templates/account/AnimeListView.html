@@ -1,0 +1,98 @@
+{% extends 'account/assets/userlist/UserListNavbar.html' %}
+{% load thumbnail %}
+{% block listanime %}
+    <div class="row">
+        <div class="container">
+            <div class="button-list text-center mt-3">
+                <a class="btn btn-md blue darken-1" href="{% url 'user:user_anime_list' pk=pk username=username %}">Oglądam</a>
+                <a class="btn btn-md blue darken-1"
+                   href="{% url 'user:user_anime_list_completed' pk=pk username=username %}">Obejrzane</a>
+                <a class="btn btn-md blue darken-1"
+                   href="{% url 'user:user_anime_list_skip' pk=pk username=username %}">Pomijam</a>
+                <a class="btn btn-md blue darken-1"
+                   href="{% url 'user:user_anime_list_hold' pk=pk username=username %}">Wstrzymane</a>
+                <a class="btn btn-md blue darken-1"
+                   href="{% url 'user:user_anime_list_dropped' pk=pk username=username %}">Porzucone</a>
+                <a class="btn btn-md blue darken-1"
+                   href="{% url 'user:user_anime_list_plan' pk=pk username=username %}">Planuję</a>
+                <a class="btn btn-md blue darken-1" href="{% url 'user:user_anime_list_all' pk=pk username=username %}">
+                    Wszystkie anime</a>
+            </div>
+            <!-- Card -->
+
+            <div class="row list-user">
+
+                {% for list in list_anime %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 mt-4">
+                        <div class="wrapper-menu">
+                            {% thumbnail list.anime.picture "260x260" crop="top" as im %}
+                                <img class="anime-list-pic" src="{{ im.url }}" width="{{ im.width }}"
+                                     height="{{ im.height }}">
+                            {% endthumbnail %}
+                            <div class="top-line">
+                                <div class="score-user text-center">
+                                    <span class="score"><i class="fa fa-star"></i><span data-toggle="tooltip"
+                                                                                        data-placement="bottom"
+                                                                                        title="Średnia ocen użytkownika">
+                                        {% if list.top_score %}{{ list.top_score }}{% else %}-{% endif %}</span> </span>
+                                </div>
+                                <div class="episode-user text-center">
+                                    <span class="episode-count" data-toggle="tooltip" data-placement="top"
+                                          title="Liczba obejrzanych odcinków"> {% if list.watched_episode %}{{ list.watched_episode }}{% else %}0{% endif %}/</span><span data-toggle="tooltip"
+                                                                                               data-placement="top"
+                                                                                               title="Liczba odcinków">{% if list.anime.number_episode %}
+                                    {{ list.anime.number_episode }}{% else %}?{% endif %}</span>
+
+                                </div>
+                            </div>
+
+                            <div class="data my-2">
+                                <div class="content text-center">
+                                    <a class="author" href="{{ list.anime.get_absolute_url }}">{{ list.anime.title }}</a>
+                                    <p class="text">
+                                        {% if list.anime.description %}{{ list.anime.description }}{% else %}Brak
+                                            opisu.{% endif %}</p>
+                                </div>
+                            </div>
+                            <div class="wrapper-footer text-center py-1">
+                                <div class="float-left pl-2">
+                                    <a data-toggle="tooltip"
+                                       data-placement="bottom"
+                                       title="Usuń z listy"><i class="fa fa-trash mr-1"></i></a>
+                                    {% if list.favorite %}
+                                        <a data-toggle="tooltip"
+                                       data-placement="bottom"
+                                       title="Usuń z ulubionych"><i class="fa fa-heart text-red"></i></a>
+                                    {% else %}
+                                    <a type="submit" data-toggle="tooltip"
+                                       data-placement="bottom"
+                                       title="Dodaj do ulubionych"><i class="fa fa-heart"></i>
+                                    </a>
+                                    {% endif %}
+                                    <a data-toggle="tooltip"
+                                       data-placement="bottom"
+                                       title="Dodaj lub zmień oceny"><i class="fa fa-star mr-1"></i></a>
+                                    <a data-toggle="tooltip"
+                                       data-placement="bottom"
+                                       title="Dodaj liczbę obejrzanych odcinków"><i class="fa fa-plus"></i></a>
+
+                                </div>
+                                <span class="text-center status-anime" data-toggle="tooltip"
+                                       data-placement="bottom"
+                                       title="Status anime">{{ list.anime.status_anime }}</span>
+                                <span class="float-right pr-2" data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Typ serii">{{ list.anime.type_series }}</span>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

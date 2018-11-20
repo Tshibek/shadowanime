@@ -1,0 +1,55 @@
+{% load thumbnail %}
+
+    {% block name_review %}
+    {% endblock %}
+    <div class="row pt-2 pl-3 pr-3">
+        {% if review %}
+            {% for reviews in review %}
+                <div class="col-lg-1 col-sm-2 col-xs-3 recom">
+                    {% thumbnail reviews.user.profile.avatar "50x50" crop="center" as im %}
+                            <img class="img-series" src="{{ im.url }}" width="{{ im.width }}"
+                                 height="{{ im.height }}">
+                        {% endthumbnail %}
+                </div>
+                <div class="col-lg-11 col-sm-10 col-xs-9 pl-1">
+                    <a class="purple-my font-17" href="{{ reviews.user.profile.get_absolute_url }}">{{ reviews.username|capfirst }}</a>
+                    <div class="float-right d-inline-block likes-dislikes">
+                        <div data-id="{{ like_obj.id }}" data-type="article" data-action="like" title="Like" class="float-left pr-3 text-center">
+                           <i class="fas fa-desktop"></i>
+                            <p data-count="like" class="text-center">2000</p>
+                        </div>
+                        <div data-id="{{ like_obj.id }}" data-type="article" data-action="like" title="Like" class="float-left pr-3 text-center">
+                           <i class="fas fa-address-book"></i>
+                            <p data-count="like" class="text-center">300</p>
+                        </div>
+
+                        <div data-id="{{ like_obj.id }}" data-type="article" data-action="like" title="Like" class="float-left pr-3">
+                           <i class="fas fa-thumbs-up"></i>
+                            <p data-count="like" class="text-center">{{ reviews.likes.count }}</p>
+                        </div>
+                        <div data-id="{{ like_obj.id }}" data-type="article" data-action="dislike" title="Dislike" class="float-left pr-3">
+                            <i class="fas fa-thumbs-down"></i>
+                            <p data-count="dislike" class="text-center">{{ reviews.dislikes.count }}</p>
+                        </div>
+                        <div data-id="{{ like_obj.id }}" data-type="article" data-action="dislike" title="Dislike" class="float-left pr-2 text-center">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p data-count="dislike" class="text-center"><a href="">Zgłoś</a> </p>
+                        </div>
+                    </div>
+                    <div class="">
+                         <a class="purple-my font-13" href="{{ reviews.user.profile.get_absolute_url }}">Zobacz inne recenzje użytkownika</a>
+                    </div>
+                    {% autoescape off %}
+                        <p class="py-2 px-2">{{ reviews.description }}</p>
+                    {% endautoescape %}
+
+                </div>
+            {% endfor %}
+        {% else %}
+            <span class="pl-2 h6">Brak recenzji. <a class="purple-my" href="">Napisz pierwszą tutaj!</a></span>
+        {% endif %}
+        <div class="col-lg-12 "><a class="float-right purple-my pr-3" href=""><i class="fas fa-plus-circle"></i> Napisz nową recenzje</a>
+        </div>
+    </div>
+
+

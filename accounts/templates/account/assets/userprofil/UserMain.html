@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load humanize %}
+
+{% block title %}{{ user|capfirst }} (Użytkownik) - shadowanime.pl{% endblock %}
+{% block content %}
+
+    <section>
+        {% include 'account/assets/userprofil/profilViewNav.html' %}
+    </section>
+
+    <section>
+        <div class="profile-height-grid my-black-color-dark">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2-5 my-black-color">
+                        <div class="mt-2 profile-img text-center">
+                            {% thumbnail user.profile.avatar "225x225" crop="center" as im %}
+                                <img class="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                            {% endthumbnail %}
+                        </div>
+
+                        <div class="osiagniecia-profile text-center mt-2">
+                            <span class="h4"><strong>OSIĄGNIĘCIA:</strong></span>
+                            <hr>
+                            <a class="trophy-user"><i class="fa fa-trophy"> </i> 125</a>
+                            <br>
+                            <span class="anty-trophy-user">Antyosiągnięć: <span>1</span></span>
+                        </div>
+
+                        <div class="link-profile text-center mt-2">
+                            <a href="{{ user.profile.get_absolute_anime_list }}" class="btn btn-xxs purple darken-2">Lista Anime</a>
+                            <a href="" class="btn btn-xxs purple darken-2">Lista Mang</a>
+                        </div>
+                    {% if user != request.user %}
+                        <div class="link-profile text-center mt-1">
+                            <a href="" class="btn btn-xx purple darken-2">Wyslij wiadomość</a>
+                            <a href="" class="btn btn-xx purple darken-2">Dodaj do znajomych</a>
+                        </div>
+                    {% endif %}
+                        <div class="text-center mt-3">
+                            <dl class="dt-responsive">
+                                <dt class="dt-col">Online:</dt>
+                                <dd class="dd-col">{% if user.profile.online %}
+                                    <span style="color: #4cae4c"><strong>Teraz</strong></span>
+                                    {% else %}{{ user.profile.last_activity|timesince }} temu{% endif %}</dd>
+                                <dt class="dt-col">Ranga:</dt>
+                                <dd class="dd-col">{% if user.profile.role == None %}Użytkownik{% else %}
+                                    {{ user.profile.role }}{% endif %}</dd>
+                                <dt class="dt-col">Język:</dt>
+                                <dd class="dd-col">{{ user.profile.language|upper }}</dd>
+                                <dt class="dt-col">Punkty:</dt>
+                                <dd class="dd-col">529</dd>
+                                <dt class="dl-dd-dt-top">Dołączono:</dt>
+                                <dd class="dl-dd-dt-topx">{{ user.date_joined |timesince }} temu</dd>
+                            </dl>
+                        </div>
+                    </div>
+
+
+                    <!-- Second Col -->
+                    <div class="col-lg-9-5">
+                        {% block profileContent %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

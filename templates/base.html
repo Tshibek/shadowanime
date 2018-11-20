@@ -1,0 +1,19 @@
+{% extends 'assets/code.html' %}
+{% block code %}
+<div class="row">
+    <div class="container">
+        <section class="header-section">
+            {% include 'header.html' %}
+        </section>
+
+        <section class="content-section">
+            {% block content %}{% endblock %}
+        </section>
+
+        <section class="footer-section">
+            {% include 'footer.html' %}
+        </section>
+    </div>
+</div>
+
+{% endblock %}

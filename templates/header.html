@@ -1,0 +1,182 @@
+{% load thumbnail %}
+{% load i18n %}
+{% load static %}
+<!--Navbar-->
+<div class="top-navbar">
+    <nav class="navbar navbar-expand-xl navbar-dark danger-color ">
+
+        <!-- Navbar brand -->
+        <a class="navbar-brand brand-color" href="{% url 'index:home' %}"><i class="fa fa-home"></i></a>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+                aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+
+                <!-- Dropdown Anime -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">ANIME <i class="fa fa-angle-down"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'series:anime_list' %}">LISTA ANIME</a>
+                        <a class="dropdown-item" href="#">SEZONY</a>
+                        {% if request.user.is_authenticated %}
+                            <a class="dropdown-item" href="#">DODAJ NOWE</a>
+                        {% endif %}
+                    </div>
+                </li>
+                <!-- Dropdown Manga -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">MANGA <i class="fa fa-angle-down"></i></a>
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'manga:manga_list' %}">LISTA MANG</a>
+                        {% if request.user.is_authenticated %}
+                            <a class="dropdown-item" href="#">DODAJ NOWE</a>
+                        {% endif %}
+
+                    </div>
+                </li>
+                <!-- Dropdown POSTACIE -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">POSTACIE <i class="fa fa-angle-down"></i></a>
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">LISTA POSTACI</a>
+                        {% if request.user.is_authenticated %}
+                            <a class="dropdown-item" href="#">DODAJ POSTAĆ</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="#">LISTA OSÓB</a>
+                        {% if request.user.is_authenticated %}
+                            <a class="dropdown-item" href="#">DODAJ OSOBĘ</a>
+                        {% endif %}
+                    </div>
+                </li>
+                <!-- Dropdown TAGI -->
+                {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">TAGI <i class="fa fa-angle-down"></i></a>
+                        <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">LISTA TAGÓW</a>
+                            <a class="dropdown-item" href="#">NOWY TAG</a>
+                            <a class="dropdown-item" href="#">ZABRONIONE</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">TAGI</a>
+                    </li>
+                {% endif %}
+
+                <!-- Dropdown SPOLECZNOSC -->
+                <li class="nav-item dropdown ">
+                    <a class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">SPOŁECZNOŚĆ <i class="fa fa-angle-down"></i></a>
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">FORUM</a>
+                        <a class="dropdown-item" href="#">DISCORD</a>
+                        <a class="dropdown-item" href="#">FACEBOOK</a>
+                        <a class="dropdown-item" href="#">ANKIETY</a>
+                        <a class="dropdown-item" href="#">AKTUALNOŚCI</a>
+                    </div>
+                </li>
+                <!-- Dropdown TROPHY -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false"><i class="fa fa-trophy"></i> <i class="fa fa-angle-down"></i></a>
+                    <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">TOP ANIME</a>
+                        <a class="dropdown-item" href="#">TOP MANG</a>
+                        <a class="dropdown-item" href="#">TOP UŻYTKOWNIKÓW</a>
+                        <a class="dropdown-item" href="#">TOP AUTORÓW</a>
+                        <a class="dropdown-item" href="#">TOP OSIĄGNIĘĆ</a>
+                    </div>
+                </li>
+
+                <!-- LINK SHOP -->
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-shopping-cart"></i></a>
+                    </li>
+                {% endif %}
+
+                <!-- LINK REGISTER -->
+                {% if not request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user:register' %}">REJESTRACJA</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+
+            <!-- Links -->
+            <form class="form-navbar form-inline" id="custom-search-input">
+                <input class="form-control input-sm" type="text" placeholder="anime, manga, nowela"
+                       aria-label="Search">
+                <span class="input-group-btn">
+                    <button class="btn btn-lg" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </form>
+
+            <!-- Dropdown USER -->
+            {% if request.user.is_authenticated %}
+                <div class="nav-item dropdown danger-color-dark user-menu">
+                    <a class="nav-link user bold" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true"
+                       aria-expanded="false">
+                        {% thumbnail request.user.profile.avatar "30x30" crop="center" as im %}
+                            <img class="img-user-header" src="{{ im.url }}" width="{{ im.width }}"
+                                 height="{{ im.height }}">
+                        {% endthumbnail %}
+                        {{ request.user|upper|safe }} <span class="fa fa-angle-down"></span></a>
+                    <div class="dropdown-menu dropdown-menu-right danger-color-dark"
+                         aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item"
+                           href="{% url 'user:profil' pk=request.user.pk username=request.user.username %}">Profil</a>
+                        {% if user.is_superuser or request.user.is_superuser %}
+                            <a class="dropdown-item" href="{% url 'admin:index' %}">Panel Admina</a>
+                        {% endif %}
+                        <a class="dropdown-item"
+                           href="{% url 'user:user_anime_list' pk=request.user.pk username=request.user %}">Lista
+                            Anime</a>
+                        <a class="dropdown-item" href="#">Edytuj profil</a>
+                        <a class="dropdown-item" href="#">Ustawienia strony</a>
+                        <a class="dropdown-item" href="{% url 'user:logout' %}">Wyloguj się</a>
+                    </div>
+
+                </div>
+            {% else %}
+                <div class="nav-item">
+                    <a class="nav-link user" href="{% url 'user:login' %}">LOGOWANIE</a>
+                </div>
+
+            {% endif %}
+
+
+        </div>
+        <!-- Collapsible content -->
+
+    </nav>
+    <!--/.Navbar-->
+    <div class="row">
+        <div class="col-lg-12">
+            <img src="{% static 'img/header/header.png' %}" class="img-fluid" width="1110" height="100%">
+        </div>
+    </div>
+
+</div>

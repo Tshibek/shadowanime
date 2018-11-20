@@ -1,0 +1,12 @@
+Django>=2
+mysqlclient
+django-extensions>=2
+djangorestframework==3.7.7
+django-crispy-forms==1.7.0
+psycopg2-binary==2.7.5
+channels==1.1.8
+sorl-thumbnail
+Pillow
+django-widget-tweaks
+python-memcached
+django-embed-video

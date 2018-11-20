@@ -1,0 +1,80 @@
+<div class="navs-profile">
+    <ul class="nav nav-tabs elegant-color-dark" id="myTab" role="tablist">
+        <li class="nav-item ml-4">
+            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+               aria-controls="profile"
+               aria-selected="true">Profil <strong>{{ user|upper }}</strong></a>
+        </li>
+        {% if username == request.user.username %}
+            <li class="nav-item">
+                <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit"
+                   aria-selected="false"><i class="fa fa-edit"></i> EDYTUJ</a>
+            </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link" id="creative-tab" data-toggle="tab" href="#creative" role="tab" aria-controls="creative"
+               aria-selected="false">TWÓRCZOŚĆ</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="activ-tab" data-toggle="tab" href="#activ" role="tab" aria-controls="activ"
+               aria-selected="false">AKTYWNOŚĆ</a>
+        </li>
+        {% if username == request.user.username %}
+            <li class="nav-item">
+                <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab"
+                   aria-controls="history"
+                   aria-selected="false">HISTORIA</a>
+            </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link" id="list-tab" data-toggle="tab" href="#list" role="tab" aria-controls="list"
+               aria-selected="false">LISTY</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <a href="{% url 'user:profil' pk=pk username=username %}">PODSUMOWANIE</a>
+            <a href="{% url 'user:achievements_profil' pk=pk username=username %}">OSIĄGNIĘCIA</a>
+            <a href="{% url 'user:rates_profil' pk=pk username=username %}">OCENY</a>
+            <a href="{% url 'user:favourite_tags_profil' pk=pk username=username %}">ULUBIONE TAGI</a>
+        </div>
+        {% if username == request.user.username %}
+            <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
+                <a href="{% url 'user:edit_profil' pk=pk username=username %}">INFORMACJE</a>
+                <a href="{% url 'user:settings_profil' pk=pk username=username %}">USTAWIENIA</a>
+                <a href="{% url 'user:edit_account_profil' pk=pk username=username %}">KONTO</a>
+            </div>
+        {% endif %}
+
+        <div class="tab-pane fade" id="creative" role="tabpanel" aria-labelledby="creative-tab-tab">
+            <a href="{% url 'user:reviews_profil' pk=pk username=username %}">RECENZJE</a>
+            <a href="{% url 'user:recommendation_profil' pk=pk username=username %}">REKOMENDACJE</a>
+        </div>
+
+        <div class="tab-pane fade" id="activ" role="tabpanel" aria-labelledby="activ-tab">
+            <a href="{% url 'user:comments_profil' pk=pk username=username %}">KOMENTARZE W NEWSACH</a>
+            <a href="{% url 'user:user_comments_profil' pk=pk username=username %}">KOMENTARZE W PU</a>
+            <a href="{% url 'user:posts_profil' pk=pk username=username %}">POSTY</a>
+
+        </div>
+        {% if username == request.user.username %}
+            <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+                <a href="{% url 'user:history_edit_profil' pk=pk username=username %}">HISTORIA EDYCJI</a>
+                <a href="{% url 'user:history_mod_profil' pk=pk username=username %}">HISTORIA MODERACJI</a>
+                <a href="{% url 'user:history_shop_profil' pk=pk username=username %}">HISTORIA ZAKUPÓW</a>
+            </div>
+        {% endif %}
+
+        <div class="tab-pane fade" id="list" role="tabpanel" aria-labelledby="list-tab">
+            <a href="{{ user.profile.get_absolute_anime_list }}">LISTA ANIME</a>
+            <a href="">LISTA MANG</a>
+            <a href="{% url 'user:favourite_profil' pk=pk username=username %}">ULUBIONE</a>
+            <a href="">DO OBEJRZENIA</a>
+            <a href="">DO PRZECZYTANIA</a>
+            <a href="">WIELOKROTNIE OGLĄDANE</a>
+            <a href="">WIELOKROTNIE CZYTANE</a>
+
+        </div>
+
+    </div>
+</div>

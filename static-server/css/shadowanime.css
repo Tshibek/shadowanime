@@ -1,0 +1,58 @@
+body {
+    background-color: #131313 !important;
+    font-family: 'Archivo', sans-serif;
+}
+.bold{
+    font-weight: bold;
+}
+.brand-color{
+    background-color: #c00!important;
+    padding: 3px!important;
+    border-radius: 8px;
+
+}
+a{
+    font-family: 'Archivo', sans-serif;
+}
+
+.top-navbar .navbar {
+    font-size: 14px;
+    max-height: 40px !important;
+    line-height: 20px !important;
+}
+.fa-angle-down{
+    font-size: 12px;
+}
+.top-navbar .fa-angle-down {
+    margin-left: -3px !important;
+}
+.top-navbar  .user, .user-menu .dropdown-item{
+    font-size: 15px!important;
+    color: white!important;
+
+}
+
+.top-navbar .user-menu{
+    line-height: 16px;
+}
+.dropdown-menu {
+   padding-top: 0;
+   padding-bottom: 0;
+}
+.dropdown-menu > li:first-child {
+   margin-top: 15px;
+}
+.dropdown-menu > li:last-child {
+   margin-bottom: 15px;
+}
+.top-navbar .dropdown-item, .top-navbar  .dropdown-item{
+   padding:10px!important;
+}
+
+.signup input::placeholder{
+    color: white;
+    opacity: 0.4;
+}
+.dropdown-menu a{
+    padding: 10px!important;
+}

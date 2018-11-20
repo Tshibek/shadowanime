@@ -1,0 +1,11 @@
+{% extends 'anime/assets/detail/AnimeDetailMain.html' %}
+{% block seriesContent %}
+    <div class="series-detail">
+    {% block name_review %}
+        <div class="content-series pt-1">
+            <span class="h6"><i class="fa fa-comment"></i> Recenzje</span>
+        </div>
+        {% endblock %}
+    {% include 'anime/assets/review.html' %}
+    </div>
+{% endblock %}

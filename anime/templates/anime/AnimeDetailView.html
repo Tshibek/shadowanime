@@ -1,0 +1,89 @@
+{% extends 'anime/assets/detail/AnimeDetailMain.html' %}
+{% block seriesContent %}
+    <div class="mb-2">
+        <span>{{ anime_model.description }}</span>
+    </div>
+    <div class="tag-section">
+        <div class="table-responsive-sm pt-4">
+            <table class="table">
+                {% if anime_model.get_tag.species %}
+                    <tr>
+                        <th>Gatunki:</th>
+                        <td> {% for tags in anime_model.get_tag.species %}
+                            <a href="" class="btn-tag" data-toggle="tooltip" data-placement="top"
+                               title="{{ tags.tag.description }}">{{ tags.tag.name }}</a> {% endfor %}
+                        </td>
+
+                    </tr>
+                {% endif %}
+                {% if anime_model.get_tag.type_character %}
+                    <tr>
+                        <th>Rodzaje postaci:</th>
+                        <td> {% for tags in anime_model.get_tag.type_character %}
+                            <a href="" class="btn-tag" data-toggle="tooltip" data-placement="top"
+                               title="{{ tags.tag.description }}">{{ tags.tag.name }}</a> {% endfor %}
+                    </tr>
+                {% endif %}
+                {% if anime_model.get_tag.place_time %}
+                    <tr>
+                        <th>Miejsce i czas:</th>
+                        <td> {% for tags in anime_model.get_tag.place_time %}
+                            <a href="" class="btn-tag" data-toggle="tooltip" data-placement="top"
+                               title="{{ tags.tag.description }}">{{ tags.tag.name }}</a>{% endfor %}
+                    </tr>
+                {% endif %}
+                {% if anime_model.get_tag.other_tag %}
+                    <tr>
+                        <th>Pozostałe tagi</th>
+                        <td> {% for tags in anime_model.get_tag.other_tag %}
+                            <a href="" class="btn-tag" data-toggle="tooltip" data-placement="top"
+                               title="{{ tags.tag.description }}">{{ tags.tag.name }}</a> {% endfor %}
+                    </tr>
+                {% endif %}
+                {% if anime_model.get_tag.prototype %}
+                    <tr>
+                        <th>Pierwowzór</th>
+                        <td> {% for tags in anime_model.get_tag.prototype %}
+                            <a href="" class="btn-tag" data-toggle="tooltip" data-placement="top"
+                               title="{{ tags.tag.description }}">{{ tags.tag.name }}</a> {% endfor %}
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+    <div class="series-detail">
+        <div class="content-series pt-3">
+            <span class="h4"><i class="fa fa-video"></i> Powiązane serie</span>
+            <hr>
+        </div>
+        <div class="content-series pt-3">
+            <span class="h4"><i class="fa fa-users"></i> Postacie</span>
+            <hr>
+        </div>
+        <div class="content-series pt-3">
+            <span class="h4"><i class="fa fa-users"></i> Obsada</span>
+            <hr>
+        </div>
+    </div>
+    <div class="series-detail-more">
+    {% block name %}
+        <div class="content-series pt-3">
+            <span class="h4"><i class="fa fa-comment"></i>  Recenzje</span>
+            <hr>
+        </div>
+    {% endblock %}
+    <div class="height-max mb-5">
+            {% include 'anime/assets/review.html' %}
+        </div>
+
+        {% block name_review %}
+            <div class="content-series pt-3">
+                <span class="h4"><i class="fa fa-comment"></i> Rekomendacje</span>
+                <hr>
+            </div>
+        {% endblock %}
+        <div class="height-max mb-5">
+            {% include 'anime/assets/recommendation.html' %}
+        </div>
+    </div>
+{% endblock %}

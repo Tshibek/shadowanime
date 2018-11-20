@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load humanize %}
+{% block title %}{{ anime_model }} (anime) - shadowanime.pl{% endblock %}
+{% block content %}
+    <section>
+        {% include 'anime/assets/detail/AnimeDetailNav.html' %}
+    </section>
+    <section class="series-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-series">
+                        <span class="h3">Anime:<span class="h3">{{ anime_model }}</span></span>
+                        <hr>
+                        {% if anime_model.title_en or anime_model.title_roman %}
+                            <span class="h6">{{ anime_model.title_en }}, {{ anime_model.title_roman }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-lg-3">
+                    <div class="series-pic text-center mb-2 ">
+                        {% thumbnail anime_model.picture "225x300" crop="center" as im %}
+                            <img class="anime-pic" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                        {% endthumbnail %}
+                    </div>
+                    <div class="series-action text-center mb-2">
+                        <span class="h6">Akcje: </span>
+                        <hr>
+                        <div class="action-link pt-2">
+                            <a href=""><i class="fa fa-edit"></i> edytuj stronę</a>
+                            <div class="clearfix"></div>
+                            <a href=""><i class="fa fa-archive"></i> archiwum</a>
+                            <div class="clearfix"></div>
+                            <a href=""><i class="fa fa-times-circle"></i> status: nie oglądałem</a>
+                            <div class="clearfix"></div>
+                            <a href=""><i class="fa fa-heart"></i> dodaj do ulubionych</a>
+                        </div>
+                    </div>
+
+                    <div class="series-action text-center mb-2">
+                        <span class="h6">Oceny:</span>
+                        <hr>
+                        <span class="h4"><strong>{% if anime_model.scores.general %}{{ anime_model.scores.general|floatformat }}{% else %}0{% endif %}</strong>/10</span>
+                        <div class="clearfix"></div>
+                        <span class="font-small">{% if anime_model.get_count_all.general_count <= 4 %}
+                            {{ anime_model.get_count_all.general_count }} głosy
+                            {% elif anime_model.get_count_all.general_count > 4 %}{{ anime_model.get_count_all.general_count }}
+                            głosów
+                            {% else %}{{ anime_model.get_count_all.general_count }}głos
+                        {% endif %}</span>
+                        <ul class="list-inline pt-2">
+                            <li class="list-inline-item" data-toggle="tooltip" data-placement="top"
+                                title="Głosów: {{ anime_model.get_count_all.story_count }}">
+                                <p>{% if anime_model.scores.story %}{{ anime_model.scores.story|floatformat }}{% else %} 0{% endif %}</p>Fabuła
+                            </li>
+                            <li class="list-inline-item" data-toggle="tooltip" data-placement="top"
+                                title="Głosów: {{ anime_model.get_count_all.graphics_count }}">
+                                <p>{% if anime_model.scores.graphics %}{{ anime_model.scores.graphics|floatformat }}{% else %} 0{% endif %}</p>Grafika
+                            </li>
+                            <li class="list-inline-item" data-toggle="tooltip" data-placement="top"
+                                title="Głosów: {{ anime_model.get_count_all.music_count }}">
+                                <p>{% if anime_model.scores.music %}{{ anime_model.scores.music|floatformat }}{% else %} 0{% endif %}</p>Muzyka
+                            </li>
+                            <li class="list-inline-item" data-toggle="tooltip" data-placement="top"
+                                title="Głosów: {{ anime_model.get_count_all.character_count }}">
+                                <p>{% if anime_model.scores.character %}{{ anime_model.scores.character|floatformat }}{% else %} 0{% endif %}</p>Postacie
+                            </li>
+                        </ul>
+
+                    </div>
+                        <div class="series-action text-center mb-2 mt-2">
+                            <span class="h6">informacje:</span>
+                            <hr>
+                            <dl class="dt-responsive mt-3">
+                                <dt class="dt-col">Typ:</dt>
+                                <dd class="dd-col">
+                                    {% if anime_model.type_series != None %}{{ anime_model.type_series }}{% else %}
+                                        -{% endif %}</dd>
+                                <dt class="dt-col">Status:</dt>
+                                <dd class="dd-col">
+                                    {% if anime_model.status_anime != None %}{{ anime_model.status_anime }}{% else %}
+                                        -{% endif %}</dd>
+                                <dt class="dt-col">Data emisji:</dt>
+                                <dd class="dd-col">
+                                    {% if anime_model.pub_date != None %}
+                                        {{ anime_model.pub_date|date:'d.m.Y' }}{% else %}
+                                        -{% endif %}</dd>
+                                {% if anime_model.end_date %}
+                                    <dt class="dt-col">Koniec emisji:</dt>
+                                    <dd class="dd-col">{% if anime_model.end_date != None %}
+                                        {{ anime_model.end_date|date:'d.m.Y' }}{% else %}-{% endif %}</dd>
+                                {% endif %}
+                                {% if anime_model.number_episode or anime_model.get_episode_count%}
+                                    <dt class="dt-col">Liczba odcinkow:</dt>
+                                    <dd class="dd-col">{% if anime_model.number_episode %}
+                                        {{ anime_model.number_episode }}{% else  %}{{ anime_model.get_episode_count }}{% endif %}</dd>
+                                {% endif %}
+                                {% if anime_model.episode_time %}
+                                    <dt class="dt-col">Dlugosc odcinkow:</dt>
+                                    <dd class="dd-col">
+                                        {% if anime_model.episode_time != None %}{{ anime_model.episode_time }}
+                                            min{% else %}
+                                            -{% endif %}</dd>
+                                {% endif %}
+                                {% if anime_model.mpaa %}
+                                    <dt class="dt-col">MPAA:</dt>
+                                    <dd class="dd-col">{{ anime_model.mpaa }} </dd>
+                                {% endif %}
+                                {#                            {% if anime_model.end_date %}#}
+                                <dt class="dl-dd-dt-top">Studio:</dt>
+                                <dd class="dl-dd-dt-topx">Bandai Visual, Bandai Entertainment, CyberConnect2,
+                                    Funimation,
+                                </dd>
+                                {#                            {% endif %}#}
+                            </dl>
+                        </div>
+                    {% url 'series:anime_detail' pk=anime_model.pk slug=anime_model.slug as anime_url %}
+                    {% if  request.get_full_path  == anime_url %}
+                        <div class="series-action text-center mb-2">
+                            <span class="h6">statystyki tytułu:</span>
+                            <hr>
+                            <dl class="dt-responsive statistic mt-3">
+                                <dt class="dt-col">Ogląda</dt>
+                                <dd class="dd-col"><i class="fa fa-plus-circle"></i> {{ anime_model.get_animelist.watching }}</dd>
+                                <dt class="dt-col">Obejrzało</dt>
+                                <dd class="dd-col"><i class="fa fa-check-circle"></i> {{ anime_model.get_animelist.completed }}</dd>
+                                <dt class="dt-col">Pominęło</dt>
+                                <dd class="dd-col"><i class="fa fa-ban"></i> {{ anime_model.get_animelist.missing }}</dd>
+                                <dt class="dt-col">Wstrzymało</dt>
+                                <dd class="dd-col"><i class="fa fa-meh"></i> {{ anime_model.get_animelist.onhold }}</dd>
+                                <dt class="dt-col">Porzuciło</dt>
+                                <dd class="dd-col"><i class="fa fa-trash-alt"></i> {{ anime_model.get_animelist.dropped }}</dd>
+                                <dt class="dt-col">Planuje</dt>
+                                <dd class="dd-col"><i class="fa fa-pencil-alt"></i> {{ anime_model.get_animelist.planning }}</dd>
+                                <dt class="dt-col">Lubi</dt>
+                                <dd class="dd-col"><i class="fa fa-heart"></i> {{ anime_model.get_animelist.favourite }}</dd>
+                            </dl>
+                        </div>
+                        <div class="series-action text-center mb-2">
+                            <span class="h6">Strone tworzą:</span>
+                            <hr>
+                        </div>
+                    {% endif %}
+
+
+                </div>
+
+                <div class="col-lg-9">
+                    {% block seriesContent %}
+
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+{% endblock %}

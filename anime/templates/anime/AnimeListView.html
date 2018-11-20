@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Lista Anime - ShadowAnime{% endblock %}
+{% load thumbnail %}
+{% block content %}
+    <div class="table-responsive">
+        <table class="table" id="dtBasicExample">
+            <thead>
+            <tr>
+                <th scope="col" width="50%">Nazwa</th>
+                <th scope="col" class="text-center" data-sortable="true">Typ</th>
+                <th scope="col" class="text-center" data-sortable="true">Epizody</th>
+                <th scope="col" class="text-center">Oceny</th>
+                <th scope="col" class="text-center" data-sortable="true">Status</th>
+                <th scope="col" class="text-center" data-sortable="true">Ocena TOP</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for anime in object_list %}
+                <tr>
+                    <td >
+                        {% thumbnail anime.picture "47x73" crop="center" as im %}
+                            <img class="" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                        {% endthumbnail %}
+                        <span class="text-left"><a href="{% url 'series:anime_detail' pk=anime.pk slug=anime.slug %}">{{ anime.title }}</a> </span>
+                    </td>
+                    <td class="text-center">{{ anime.type_series }}</td>
+                    <td class="text-center" >{% if anime.number_episode %}{{ anime.number_episode }}{% elif anime.get_episode_count %}{{ anime.get_episode_count }}{% else %}-{% endif %}</td>
+                    <td class="text-center score-table">
+                        <em>Ogolna: <span>{% if anime.scores.general %}{{ anime.scores.general|floatformat }}{% else %}-{% endif %}</span></em>
+                        <em>Fabula: <span>{% if anime.scores.story %}{{ anime.scores.story|floatformat }}{% else %}-{% endif %}</span></em>
+                        <em>Grafika: <span>{% if anime.scores.graphics %}{{ anime.scores.graphics|floatformat }}{% else %}-{% endif %}</span></em>
+                        <em>Muzyka: <span>{% if anime.scores.music %}{{ anime.scores.music|floatformat }}{% else %}-{% endif %}</span></em>
+                        <em>Postacie: <span>{% if anime.scores.character %}{{ anime.scores.character|floatformat }}{% else %}-{% endif %}</span></em>
+                    </td>
+                    <td class="text-center">{{ anime.status_anime }}</td>
+                    <td class="text-center font-weight-bold h5"> {% if anime.top_score %}{{ anime.top_score|floatformat }}{% else %}-{% endif %}</td>
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+    <script type="javascript">
+    $(document).ready(function () {
+  $('#dtBasicExample').DataTable();
+  $('.dataTables_length').addClass('bs-select');
+});
+    </script>
+{% endblock %}

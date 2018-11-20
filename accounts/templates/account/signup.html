@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="col-lg-6 col-md-6 mx-auto my-4">
+        <h2 class="text-center white-text">Zarejestruj się</h2>
+        <!-- Form -->
+        <form class="text-center signup" style="color: #757575;" method="post" role="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Username -->
+            <div class="md-form ">
+                {% render_field form.username class="form-control" placeholder="Nazwa Użytkownika"%}
+                <label for='{{ form.username }}' class="white-text h6" >Nazwa Użytkownika</label>
+            </div>
+
+            <!-- E-mail -->
+            <div class="md-form">
+                {% render_field form.email class="form-control" placeholder="E-mail"%}
+                <label for='{{ form.email }}' class="white-text h6">E-mail</label>
+            </div>
+
+            <!-- Password -->
+            <div class="md-form">
+                {% render_field form.password1 class="form-control" aria-describedby="materialRegisterFormPasswordHelpBlock" placeholder="Hasło"%}
+                <label for='{{ form.password1 }}' class="white-text h6">Hasło</label>
+            </div>
+
+            <!-- Re-Password -->
+            <div class="md-form">
+                {% render_field form.password2 class="form-control " aria-describedby="materialRegisterFormPasswordHelpBlock" placeholder="Powtórz hasło"%}
+                <label for='{{ form.password2 }}' class="white-text h6">Powtórz hasło</label>
+                <small id="materialRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
+                    At least 8 characters and 1 digit
+                </small>
+            </div>
+
+            <!-- Sign up button -->
+            <button class="btn info-color-dark btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Zarejestruj się</button>
+
+            <!-- Terms of service -->
+            <p>
+                <em>Zarejestrując się</em> akceptujesz
+                <a href="" target="_blank">regulamin serwisu</a>. </p>
+
+
+        </form>
+        <!-- Form -->
+    </div>
+{% endblock %}

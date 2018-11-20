@@ -1,0 +1,218 @@
+{% extends 'account/assets/userprofil/UserMain.html' %}
+{% load thumbnail %}
+{% load i18n %}
+{% block profileContent %}
+<div class="profile-view-detail mt-4">
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="title-profile">
+                <div class="title-main ">
+                    <span class="h5">STATYSTYKI ANIME:</span>
+                    <hr>
+                </div>
+                <div class="time">
+                    <span class="float-left">Czas oglądania: <strong>36 msc, 26 dni, 20 godz, 36 min</strong> </span>
+                    <span class="float-right">Średnia: <strong>{{ user.profile.get_score }}</strong></span>
+                </div>
+                <div class="clearfix"></div>
+                <div class="progress mt-3">
+                    {% if user.profile.get_anime_progress.progress_watching %}
+                    <div class="progress-bar success-color" role="progressbar"
+                         style="width:{{ user.profile.get_anime_progress.progress_watching|floatformat:"0" }}%"
+                         aria-valuenow=""
+                         aria-valuemin="0"
+                         aria-valuemax="">{{ user.profile.get_anime_progress.progress_watching|floatformat:"0" }}%
+                    </div>
+                    {% endif %}
+                {% if user.profile.get_anime_progress.progress_completed %}
+                    <div class="progress-bar primary-color" role="progressbar"
+                         style="width: {{ user.profile.get_anime_progress.progress_completed|floatformat:"0" }}%"
+                         aria-valuenow=""
+                         aria-valuemin="0"
+                         aria-valuemax="">{{ user.profile.get_anime_progress.progress_completed|floatformat:"0" }}%
+                    </div>
+                {% endif %}
+                {% if user.profile.get_anime_progress.progress_missing %}
+                    <div class="progress-bar purple" role="progressbar"
+                         style="width: {{ user.profile.get_anime_progress.progress_missing|floatformat:"0" }}%"
+                         aria-valuenow=""
+                         aria-valuemin="0"
+                         aria-valuemax="">{{ user.profile.get_anime_progress.progress_missing|floatformat:"0" }}%
+                    </div>
+                {% endif %}
+                {% if user.profile.get_anime_progress.progress_onhold %}
+                    <div class="progress-bar warning-color" role="progressbar"
+                         style="width: {{ user.profile.get_anime_progress.progress_onhold|floatformat:"0" }}%"
+                         aria-valuenow=""
+                         aria-valuemin="0"
+                         aria-valuemax="">{{ user.profile.get_anime_progress.progress_onhold|floatformat:"0" }}%
+                    </div>
+                {% endif %}
+                {% if user.profile.get_anime_progress.progress_dropped %}
+                    <div class="progress-bar danger-color" role="progressbar"
+                         style="width: {{ user.profile.get_anime_progress.progress_dropped|floatformat:"0" }}%"
+                         aria-valuenow=""
+                         aria-valuemin="0"
+                         aria-valuemax="">{{ user.profile.get_anime_progress.progress_dropped|floatformat:"0" }}%
+                    </div>
+                {% endif %}
+                {% if user.profile.get_anime_progress.progress_planning %}
+                    <div class="progress-bar grey" role="progressbar"
+                         style="width: {{ user.profile.get_anime_progress.progress_planning|floatformat:"0" }}%"
+                         aria-valuenow=""
+                         aria-valuemin="0"
+                         aria-valuemax="">{{ user.profile.get_anime_progress.progress_planning|floatformat:"0" }}%
+                    </div>
+                {% endif %}
+                </div>
+                <div class="clearfix"></div>
+                <div class="history-progress mt-2 ">
+                    <div class="float-left">
+                        <div class="circlearancione"><span class="circle success-color"></span><span
+                                class="text-circle">Oglądam: {{ user.profile.get_anime_progress.watching }}</span>
+                        </div>
+                        <div class="circlearancione"><span class="circle primary-color"></span><span
+                                class="text-circle">Obejrzane: {{ user.profile.get_anime_progress.completed }}</span>
+                        </div>
+                        <div class="circlearancione"><span class="circle purple"></span><span
+                                class="text-circle">Pomijam: {{ user.profile.get_anime_progress.missing }}</span>
+                        </div>
+                        <div class="circlearancione"><span class="circle warning-color"></span><span
+                                class="text-circle">Wstrzymane: {{ user.profile.get_anime_progress.onhold }}</span>
+                        </div>
+                        <div class="circlearancione"><span class="circle danger-color"></span><span
+                                class="text-circle">Porzucone: {{ user.profile.get_anime_progress.dropped }}</span>
+                        </div>
+                        <div class="circlearancione"><span class="circle grey"></span><span
+                                class="text-circle">Planuje: {{ user.profile.get_anime_progress.planning }}</span>
+                        </div>
+                    </div>
+                    <div class="float-right text-right">
+                        <span>Tytułów:<strong> {{ user.profile.get_anime_progress.all_progress }}</strong></span>
+                        <div class="clearfix"></div>
+                        <span>Epizodów: <strong> {{ user.profile.watched_episode }}</strong></span>
+                        <div class="clearfix"></div>
+                        <span>Rewatch:<strong> {{ user.profile.rewatch_episode }}</strong></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-5">
+            <div class="title-profile">
+                <div class="title-main">
+                    <span class="h5">AKTUALIZACJE LISTY ANIME:</span>
+                    <hr>
+                    <ul class="list-unstyled pt-2">
+                        {% if anime_list %}
+                            {% for list in anime_list %}
+                            {% thumbnail list.anime.picture "40x60" crop="center" as im %}
+                            <li class="media p-2 border-bottom">
+                            <img class="img-fluid" src="{{ im.url }}" width="{{ im.width }}"
+                                 height="{{ im.height }}">
+                            <div class="media-body p-2">
+                            <h6 class="pb-0 mb-0"><a
+                                    href="{{ list.anime.get_absolute_url }}">{{ list.anime.title }}</a>
+                            </h6>
+                            <span class="pt-0 mt-0">
+                            {% if list.type == 'Watching' %}
+                            Oglądam
+                            {% elif list.type == 'Planning' %}
+                            Planuję
+                            {% elif list.type == 'Completed' %}
+                            Obejrzane
+                            {% elif list.type == 'Dropped' %}
+                            Porzucone
+                            {% elif list.type == 'Onhold' %}
+                            Wstrzymane
+                            {% elif list.type == 'Missing' %}
+                            Pomijam
+                            {% endif %}
+                        </span>
+                        </div>
+                        </li>
+                        {% endthumbnail %}
+                        {% endfor %}
+                        {% else %}
+                        <span class="">Brakt tytułów na liście.</span>
+                        {% endif %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3 mb-5">
+        <div class="col-lg-7">
+            <div class="title-profile">
+                <div class="title-main ">
+                    <span class="h5">STATYSTYKI MANG:</span>
+                    <hr>
+                </div>
+                <div class="time">
+                    <span class="float-left">Czas czytania: <strong>36 msc, 26 dni, 20 godz, 36 min</strong> </span>
+                    <span class="float-right">Średnia: <strong>8.5</strong></span>
+                </div>
+                <div class="clearfix"></div>
+                <div class="progress mt-3">
+                    <div class="progress-bar success-color" role="progressbar" style="width:25%" aria-valuenow=""
+                         aria-valuemin="0" aria-valuemax="">25%
+                    </div>
+                    <div class="progress-bar primary-color" role="progressbar" style="width: 25%" aria-valuenow=""
+                         aria-valuemin="0" aria-valuemax="">25%
+                    </div>
+                    <div class="progress-bar purple" role="progressbar" style="width: 10%" aria-valuenow=""
+                         aria-valuemin="0" aria-valuemax="">10%
+                    </div>
+                    <div class="progress-bar warning-color" role="progressbar" style="width: 10%" aria-valuenow=""
+                         aria-valuemin="0" aria-valuemax="">10%
+                    </div>
+                    <div class="progress-bar danger-color" role="progressbar" style="width: 10%" aria-valuenow=""
+                         aria-valuemin="0" aria-valuemax="">10%
+                    </div>
+                    <div class="progress-bar grey" role="progressbar" style="width: 20%" aria-valuenow=""
+                         aria-valuemin="0" aria-valuemax="">20%
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="history-progress mt-2 ">
+                    <div class="float-left">
+                        <div class="circlearancione"><span class="circle success-color"></span><span
+                                class="text-circle">Czytam: 80</span></div>
+                        <div class="circlearancione"><span class="circle primary-color"></span><span
+                                class="text-circle">Przeczytałem: 200</span></div>
+                        <div class="circlearancione"><span class="circle purple"></span><span
+                                class="text-circle">Pomijam: 23</span></div>
+                        <div class="circlearancione"><span class="circle warning-color"></span><span
+                                class="text-circle">Wstrzymane: 50</span></div>
+                        <div class="circlearancione"><span class="circle danger-color"></span><span
+                                class="text-circle">Porzucone: 20</span></div>
+                        <div class="circlearancione"><span class="circle grey"></span><span
+                                class="text-circle">Planuje: 100</span></div>
+                    </div>
+                    <div class="float-right text-right">
+                        <span>Mang:<strong> 500</strong></span>
+                        <div class="clearfix"></div>
+                        <span>Rozdziałów: <strong> 500</strong></span>
+                        <div class="clearfix"></div>
+                        <span>Re-read:<strong> 500</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="title-profile">
+                <div class="title-main">
+                    <span class="h5">AKTUALIZACJE LISTY MANG:</span>
+                    <hr>
+                    <span>Brak tytułów na liście.</span>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
