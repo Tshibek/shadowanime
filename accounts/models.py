@@ -3,7 +3,7 @@ from datetime import timedelta
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.db.models import Avg, Sum
+from django.db.models import Avg, Sum, F, PositiveIntegerField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
@@ -11,6 +11,7 @@ from django.utils import timezone
 from sorl.thumbnail import ImageField
 from django.db import models
 from django_extensions.db import fields as extension_fields
+
 
 from anime.models import Anime, ScoreAnime, EpisodsAnime
 
@@ -122,13 +123,37 @@ class Profile(models.Model):
     def rewatch_episode(self):
         minus = WatchedAnime.objects.filter(user__user=self.user).count()
         watched = \
-        list(WatchedAnime.objects.filter(user__user=self.user, watch__gte=1).aggregate(Sum('watch')).values())[0]
+            list(WatchedAnime.objects.filter(user__user=self.user, watch__gte=1).aggregate(Sum('watch')).values())[0]
         rewatched = 0
         try:
             rewatched = (watched - minus)
         except:
             pass
         return rewatched
+
+    def time_watched(self):
+        watch = list(WatchedAnime.objects.filter(user__user=self.user).aggregate(
+            average_difference=Sum(F('watch') * F('episode__dlugosc'), output_field=PositiveIntegerField())).values())[0]
+        year = watch // 525600
+        month = watch // 43200
+        rest_of_month = month % 12
+        day = watch // 1440
+        rest_of_day = day % 30
+        hours = watch // 60
+        rest_of_hours = hours % 24
+        rest_of_minutes = watch % 60
+        minutes = rest_of_minutes
+        if year >= 1:
+            return "%d lat %2d miesięcy %3d dni %4d godzin %5d minut " % (year,rest_of_month, rest_of_day, rest_of_hours, minutes)
+        elif month >= 1:
+            return "%d miesięcy %2d dni %3d godzin %4d minut " % (month, rest_of_day, rest_of_hours, minutes)
+        elif day >= 1:
+            return " %d dni %2d godzin %3d minut " % (day, rest_of_hours, minutes)
+        else:
+
+            return "%d godzin %2d minut " % (hours, minutes)
+
+
 
 
 class UserListAnime(models.Model):
@@ -222,7 +247,7 @@ class WatchedAnime(models.Model):
     user = models.ForeignKey(UserWatchedAnime, on_delete=models.CASCADE)
     episode = models.ForeignKey(EpisodsAnime, on_delete=models.CASCADE)
     watch = models.SmallIntegerField(blank=True, null=True, default=0,
-                                     validators=[MaxValueValidator(100), MinValueValidator(1)])
+                                     validators=[MaxValueValidator(10000), MinValueValidator(1)])
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_updated = models.DateTimeField(auto_now=True, editable=False)
 

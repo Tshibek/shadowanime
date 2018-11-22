@@ -2,10 +2,14 @@
 
 {% block name %}
 {% endblock %}
-<div class="row pt-2 pl-3 pr-3">
+
+<div class="row pt-2 px-3">
+
     {% if recom %}
         {% for recoms in recom %}
-            <div class="col-lg-1 col-sm-2 col-xs-3 recom">
+
+            <div class="col-lg-1 col-sm-2 col-xs-3">
+
                 {% thumbnail recoms.to_anime.picture "70x90" crop="center" as im %}
                     <img class="img-series" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                 {% endthumbnail %}
@@ -23,17 +27,20 @@
                                            href="{{ recoms.user.profile.get_absolute_url }}">{{ recoms.username|capfirst }}</a>, {{ recoms.created|timesince }}
                     <span>temu</span>
                     <div class="float-right d-inline-block likes-dislikes">
-                        <div data-id="{{ like_obj.id }}" data-type="article" data-action="like" title="Like" class="float-left pr-3">
-                           <i class="fas fa-thumbs-up"></i>
+                        <div data-id="{{ like_obj.id }}" data-type="article" data-action="like" title="Like"
+                             class="float-left pr-3">
+                            <i class="fas fa-thumbs-up"></i>
                             <p data-count="like" class="text-center">{{ recoms.likes.count }}</p>
                         </div>
-                        <div data-id="{{ like_obj.id }}" data-type="article" data-action="dislike" title="Dislike" class="float-left pr-2">
+                        <div data-id="{{ like_obj.id }}" data-type="article" data-action="dislike" title="Dislike"
+                             class="float-left pr-2">
                             <i class="fas fa-thumbs-down"></i>
                             <p data-count="dislike" class="text-center">{{ recoms.dislikes.count }}</p>
                         </div>
-                        <div data-id="{{ like_obj.id }}" data-type="article" data-action="dislike" title="Dislike" class="float-left pr-2 text-center">
+                        <div data-id="{{ like_obj.id }}" data-type="article" data-action="dislike" title="Dislike"
+                             class="float-left pr-2 text-center">
                             <i class="fas fa-exclamation-triangle"></i>
-                            <p data-count="dislike" class="text-center"><a href="">Zgłoś</a> </p>
+                            <p data-count="dislike" class="text-center"><a href="">Zgłoś</a></p>
                         </div>
 
                     </div>
@@ -43,12 +50,15 @@
                 {% endautoescape %}
 
             </div>
+
         {% endfor %}
     {% else %}
-        <span class="pl-2 h6">Brak rekomendacji. <a class="purple-my" href="">Napisz pierwszą tutaj!</a></span>
+        <span class="pl-3 h6">Brak rekomendacji. <a class="purple-my" href="">Napisz pierwszą tutaj!</a></span>
     {% endif %}
-    <div class="col-lg-12 "><a class="float-right purple-my pr-3" href=""><i class="fas fa-plus-circle"></i> Napisz nową</a>
-    </div>
 </div>
+<div class="col-lg-12 "><a class="float-right purple-my pr-3" href=""><i class="fas fa-plus-circle"></i> Napisz
+    nową</a>
+</div>
+
 
 

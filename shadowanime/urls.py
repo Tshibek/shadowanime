@@ -21,11 +21,14 @@ from django.conf import settings
 
 
 urlpatterns = [
+    url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', admin.site.urls),
     url(r'', include('shadow.urls', namespace='index')),
     url(r'', include('accounts.urls', namespace='user')),
     url(r'^series/', include('anime.urls', namespace='series')),
     url(r'^manga/', include('manga.urls', namespace='manga')),
+
 
 
 ]

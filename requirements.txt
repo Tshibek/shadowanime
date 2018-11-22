@@ -10,3 +10,5 @@ Pillow
 django-widget-tweaks
 python-memcached
 django-embed-video
+django-jet
+google-api-python-client==1.4.1

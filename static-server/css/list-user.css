@@ -1,0 +1,109 @@
+.list-user .anime-list-pic {
+    width: 100% !important;
+    background-size: cover;
+    -webkit-mask-image: -webkit-gradient(linear,left bottom, left top,
+    color-stop(1.00, rgba(0, 0, 0, 1)),
+    color-stop(0.00, rgba(0, 0, 0, 0)));
+    position: relative;
+
+}
+.list-user .wrapper-menu{
+    min-height: 400px;
+    height: 100%;
+    overflow: hidden;
+    background-color: #2E2E2E;
+    position: relative;
+    border-radius: 10px;
+}
+.list-user .top-line{
+    top: 0;
+    position: absolute;
+    width: 100%;
+}
+.list-user .score-user{
+    float: left;
+    width: 25%;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px;
+    border-bottom-right-radius: 10px;
+
+}
+.list-user .episode-count{
+    font-size: 13px;
+}
+.score-user .fa-star{
+    color: #9c27b0;
+    font-size: 15px;
+}
+.list-user .episode-user{
+    float: right;
+    width: 28%;
+    height: 30px!important;
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+    padding: 5px;
+    border: none;
+    border-bottom-left-radius: 10px;
+}
+
+.score-user .score{
+    font-weight: 700;
+    font-size: 16px!important;
+}
+.score-user .episode-right{
+    position: absolute;
+    right: 0!important;
+}
+.list-user a.author{
+    font-weight: 700;
+    font-size: 16px;
+    color: #7b1fa2!important;
+    text-decoration: none!important;
+
+}
+.list-user .data{
+    height: 12ch;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.list-user .text {
+    color: #fff!important;
+    padding: 5px!important;
+
+}
+.wrapper-footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    background-color: #7b1fa2;
+    font-size: 15px;
+
+}
+.wrapper-footer a{
+    color: #ce93d8!important;
+    text-align: center!important;
+    padding-right: 5px;
+
+}
+.wrapper-footer a:hover{
+    font-size: 16px!important;
+    color: #fff!important;
+
+}
+.wrapper-footer span{
+    font-weight: 600;
+    color: #ce93d8!important;
+
+}
+.list-user .status-anime{
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #fff!important;
+    opacity: .3;
+}
+
+

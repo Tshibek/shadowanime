@@ -2,7 +2,8 @@
 
     {% block name_review %}
     {% endblock %}
-    <div class="row pt-2 pl-3 pr-3">
+
+    <div class="row pt-2 px-3 ">
         {% if review %}
             {% for reviews in review %}
                 <div class="col-lg-1 col-sm-2 col-xs-3 recom">
@@ -46,7 +47,7 @@
                 </div>
             {% endfor %}
         {% else %}
-            <span class="pl-2 h6">Brak recenzji. <a class="purple-my" href="">Napisz pierwszą tutaj!</a></span>
+            <span class="pl-3 h6">Brak recenzji. <a class="purple-my" href="">Napisz pierwszą tutaj!</a></span>
         {% endif %}
         <div class="col-lg-12 "><a class="float-right purple-my pr-3" href=""><i class="fas fa-plus-circle"></i> Napisz nową recenzje</a>
         </div>

@@ -56,6 +56,7 @@ def AnimeEpisodeDetailView(request, pk, slug, anime):
     context = locals()
     return render(request, 'anime/AnimeEpisodeDetailView.html', context)
 
+
 @cache_page(60 * 60)
 def AnimeRecommendations(request, pk, slug):
     anime_model = Anime.objects.get(pk=pk, slug=slug)
